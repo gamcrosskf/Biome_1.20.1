@@ -1,31 +1,38 @@
 package mc.gamcross.eko.world.biome;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+//import net.minecraft.world.level.block.Block;
+//import net.minecraft.world.level.block.Blocks;
+//import net.minecraft.world.level.levelgen.MaterialRules;
+
+// net/minecraft/world/gen/surfacebuilder/MaterialRules
+
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+
+import net.minecraft.world.gen.surfacebuilder.MaterialRules;
 
 public class EkoSurfaceRuleData {
-    private static final SurfaceRules.RuleSource DIRT = makeStateRule(Blocks.DIRT);
-    private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(Blocks.GRASS_BLOCK);
-    private static final SurfaceRules.RuleSource RED_TERRACOTTA = makeStateRule(Blocks.RED_TERRACOTTA);
-    private static final SurfaceRules.RuleSource BLUE_TERRACOTTA = makeStateRule(Blocks.BLUE_TERRACOTTA);
+    private static final MaterialRules.MaterialRule DIRT = makeStateRule(Blocks.DIRT);
+    private static final MaterialRules.MaterialRule GRASS_BLOCK = makeStateRule(Blocks.GRASS_BLOCK);
+    private static final MaterialRules.MaterialRule RED_TERRACOTTA = makeStateRule(Blocks.RED_TERRACOTTA);
+    private static final MaterialRules.MaterialRule BLUE_TERRACOTTA = makeStateRule(Blocks.BLUE_TERRACOTTA);
 
-     public static SurfaceRules.RuleSource makeRules()
+     public static MaterialRules.MaterialRule makeRules()
     {
-        SurfaceRules.ConditionSource isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0);
-        SurfaceRules.RuleSource grassSurface = SurfaceRules.sequence(SurfaceRules.ifTrue(isAtOrAboveWaterLevel, GRASS_BLOCK), DIRT);
+        MaterialRules.MaterialCondition isAtOrAboveWaterLevel = MaterialRules.water(-1, 0);
+        MaterialRules.MaterialRule grassSurface = MaterialRules.sequence(MaterialRules.condition(isAtOrAboveWaterLevel, GRASS_BLOCK), DIRT);
 
-        return SurfaceRules.sequence(
-                SurfaceRules.ifTrue(SurfaceRules.isBiome(EkoBiomes.HOT_RED), RED_TERRACOTTA),
-                SurfaceRules.ifTrue(SurfaceRules.isBiome(EkoBiomes.COLD_BLUE), BLUE_TERRACOTTA),
+        return MaterialRules.sequence(
+                MaterialRules.condition(MaterialRules.biome(EkoBiomes.HOT_RED), RED_TERRACOTTA),
+                MaterialRules.condition(MaterialRules.biome(EkoBiomes.COLD_BLUE), BLUE_TERRACOTTA),
 
                 // Default to a grass and dirt surface
-                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, grassSurface)
+                MaterialRules.condition(MaterialRules.STONE_DEPTH_FLOOR, grassSurface)
         );
     }
 
-    private static SurfaceRules.RuleSource makeStateRule(Block block)
+    private static MaterialRules.MaterialRule makeStateRule(Block block)
     {
-        return SurfaceRules.state(block.defaultBlockState());
+        return MaterialRules.block(block.getDefaultState());
     }
 }

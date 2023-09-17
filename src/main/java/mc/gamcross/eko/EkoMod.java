@@ -5,7 +5,9 @@ import mc.gamcross.eko.world.biome.custom.Eko_Hot_Red_Biome;
 import mc.gamcross.eko.world.biome.EkoSurfaceRuleData;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.resources.ResourceLocation;
+//import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import terrablender.api.Regions;
@@ -22,8 +24,9 @@ public class EkoMod implements ModInitializer, TerraBlenderApi {
 
 	@Override
 	public void onTerraBlenderInitialized() {
-		Regions.register(new Eko_Cold_Blue_Biome(new ResourceLocation(MOD_ID, "overworld_1"), 2));
-		Regions.register(new Eko_Hot_Red_Biome(new ResourceLocation(MOD_ID, "overworld_2"), 2));
+		Regions.register(new Eko_Cold_Blue_Biome(new Identifier(MOD_ID, "overworld_1"), 2));
+		Regions.register(new Eko_Hot_Red_Biome(new Identifier(MOD_ID, "overworld_2"), 2));
+
 
 		SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, EkoSurfaceRuleData.makeRules());
 	}
