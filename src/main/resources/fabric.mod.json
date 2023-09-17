@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "eko",
+	"version": "1.0.0",
+	"name": "Test",
+	"description": "A simple test mod for TerraBlender.",
+	"authors": [
+		"gamcross"
+	],
+	"license": "LGPLv3",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"mc.gamcross.eko.EkoMod"
+		],
+		"terrablender": [
+			"mc.gamcross.eko.EkoMod"
+		]
+	},
+	"mixins": [],
+	"depends": {
+		"fabricloader": "*",
+		"fabric": "*",
+		"minecraft": "1.20.x",
+		"java": ">=17",
+		"terrablender": "*"
+	}
+}
